@@ -1,0 +1,24 @@
+--管理員帳號資料表 --密碼採⽤.net SHA256CryptoServiceProvider ComputeHash⽅法，以password+id（⼤寫)做為
+hash值寫入 
+CREATE TABLE [dbo].[sysadmin]( 
+[id] [uniqueidentifier] NOT NULL, 
+[username] [varchar](20) NOT NULL, 
+[password] [varchar](200) NOT NULL, 
+[email] [varchar](100) NULL, 
+[initdate] [datetime] NULL, 
+[modifydate] [datetime] NULL, 
+ CONSTRAINT [PK_user] PRIMARY KEY CLUSTERED  
+( 
+[id] ASC 
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, 
+OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY] 
+) ON [PRIMARY] 
+GO 
+ALTER TABLE [dbo].[sysadmin] ADD  CONSTRAINT [DF_user_id]  DEFAULT (newid()) FOR 
+[id] 
+GO 
+
+
+--系統初始化管理員帳號(pwd is 123456) 
+insert into  [dbo].[sysadmin] (id,username,password,email,initdate,modifydate) 
+values('23ADCE4E-28EA-4E3E-A3D5-A54FAEDA8B6D','admin',N'Gom9dK5yTFPnzDT7FSAsflJUE66Xl7CKEkRMkDUnw5Y=','admin123@mail.com',null,null) 
